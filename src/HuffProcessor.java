@@ -95,7 +95,9 @@ public class HuffProcessor {
 		}
 		return freq;
 	}
+	
 
+	
 	private HuffNode makeTreeFromCounts(int[] counts) {
 		// TODO Auto-generated method stub
 		PriorityQueue<HuffNode> pq = new PriorityQueue<>();
@@ -121,6 +123,8 @@ public class HuffProcessor {
 		
 	}
 
+	
+	
 	private Object CodingsFromTree(HuffNode root) {
 		// TODO Auto-generated method stub
 		return null;
@@ -143,6 +147,9 @@ public class HuffProcessor {
 	 * @param in  Buffered bit stream of the file to be decompressed.
 	 * @param out Buffered bit stream writing to the output file.
 	 */
+	
+	
+	
 	public void decompress(BitInputStream in, BitOutputStream out) {
 
 		int bits = in.readBits(BITS_PER_INT);
@@ -155,7 +162,9 @@ public class HuffProcessor {
 		out.close();
 
 	}
+	
 
+	
 	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
 
 		// TODO Auto-generated method stub
@@ -183,6 +192,9 @@ public class HuffProcessor {
 		}
 	}
 
+	
+	
+	
 	private HuffNode readTreeHeader(BitInputStream in) {
 		// TODO Auto-generated method stub
 		int bit = in.readBits(1);
