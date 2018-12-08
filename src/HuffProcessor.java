@@ -86,7 +86,7 @@ public class HuffProcessor {
 		           if (bits == 0) current = current.myLeft;
 		      else current = current.myRight;
 
-		           if (current.myValue == BITS_PER_WORD) {
+		           if (current.myLeft == null && current.myRight==null) {
 		               if (current.myValue == PSEUDO_EOF) 
 		                   break;   // out of loop
 		               else {
