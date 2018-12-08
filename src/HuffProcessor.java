@@ -30,9 +30,14 @@ public class HuffProcessor {
 	public HuffProcessor() {
 		this(0);
 	}
+	
 
 	public HuffProcessor(int debug) {
 		myDebugLevel = debug;
+		//HuffProcessor hp  = new HuffProcessor(4);
+		//HuffProcessor hp = new HuffProcessor(HuffProcessor.DEBUG_HIGH);
+
+
 	}
 
 	/**
@@ -62,15 +67,35 @@ public class HuffProcessor {
 //	out.close();
 
 	}
-
+	//TreeMap<Integer,String> myMap = new TreeMap<>();
 	private String[] makeCodingsFromTree(HuffNode root) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		
+		String[] encodings = new String[ALPH_SIZE + 1];
+	    doWork(root,"",encodings);
+				
+				
+				return encodings;
+			}
+			
+			private void doWork(HuffNode root, String path, String[] encodings) {
+				if (root == null) return;
+				
+				if (root.myLeft == null && root.myRight == null) {
+					encodings[root.myValue] = path;
+			        return;
+				}
+				doWork(root.myLeft,path+"0", encodings);
+				doWork(root.myRight,path+"1", encodings);
+		
+			}
 
 	private int[] readForCounts(BitInputStream in) {
 		int freq[] = new int[ALPH_SIZE+1];
+<<<<<<< HEAD
 		freq[PSEUDO_EOF] = 1;
+=======
+		freq[PSEUDO_EOF] =1;
+>>>>>>> eea485d7226465900cfce8850447f1f5dca192ca
 		while (true ) {
 		int val = in.readBits(BITS_PER_WORD);
 		if (val == -1) break;
@@ -83,6 +108,7 @@ public class HuffProcessor {
 
 	
 	private HuffNode makeTreeFromCounts(int[] counts) {
+		
 		// TODO Auto-generated method stub
 		PriorityQueue<HuffNode> pq = new PriorityQueue<>();
 
@@ -98,10 +124,18 @@ public class HuffProcessor {
 		    // create new HuffNode t with weight from
 		    // left.weight+right.weight and left, right subtrees
 		    
+<<<<<<< HEAD
 		    HuffNode t = new HuffNode(-1, left.myWeight + right.myWeight, left, right);
+=======
+		    HuffNode t = new HuffNode(0-1,left.myWeight + right.myWeight, left, right);
+>>>>>>> eea485d7226465900cfce8850447f1f5dca192ca
 		    pq.add(t);
 		}
+		
 		HuffNode root = pq.remove();
+		if (myDebugLevel >= DEBUG_HIGH) {
+			System.out.printf("pq created with %d nodes\n", pq.size());
+		}
 		return root;
 		
 		
@@ -109,13 +143,14 @@ public class HuffProcessor {
 
 	
 	
-	private Object CodingsFromTree(HuffNode root) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	private Object CodingsFromTree(HuffNode root) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	
 	private void writeHeader(HuffNode root, BitOutputStream out) {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
 		if(root.myLeft != null && root.myRight != null) {
 			writeHeader(root.myLeft, out);
@@ -127,14 +162,48 @@ public class HuffProcessor {
 		else {
 			out.writeBits(1, 1);
 			out.writeBits(BITS_PER_WORD + 1, root.myValue);
+=======
+		if(root.myLeft != null && root.myRight != null) {
+
+			writeHeader(root.myLeft, out);
+
+			writeHeader(root.myRight, out);
+
+			out.writeBits(1, 0);			
+>>>>>>> eea485d7226465900cfce8850447f1f5dca192ca
 		}
 
+		else {
+
+			out.writeBits(1, 1);
+
+			out.writeBits(BITS_PER_WORD + 1, root.myValue);
+
+		}
 	}
 
 	
+<<<<<<< HEAD
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		// TODO Auto-generated method stub
 		int val = in.readBits();
+=======
+
+	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
+		String code;
+		code = codings[PSEUDO_EOF];
+			    out.writeBits(code.length(), Integer.parseInt(code,2));
+		while (true) {
+		int val = in.readBits(BITS_PER_WORD);
+		if (val == -1) break;
+		code = codings[val];
+		
+		
+
+		out.writeBits(code.length(), Integer.parseInt(code,2));
+		}
+
+>>>>>>> eea485d7226465900cfce8850447f1f5dca192ca
 
 	}
 
