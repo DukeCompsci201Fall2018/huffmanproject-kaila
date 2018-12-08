@@ -1,5 +1,4 @@
 import java.util.PriorityQueue;
-import java.util.TreeMap;
 
 //Kaila Lattimore kml82
 //Collins Abanda caa52
@@ -63,7 +62,7 @@ public class HuffProcessor {
 //	out.close();
 
 	}
-	TreeMap<Integer,String> myMap = new TreeMap<>();
+	//TreeMap<Integer,String> myMap = new TreeMap<>();
 	private String[] makeCodingsFromTree(HuffNode root) {
 		
 		String[] encodings = new String[ALPH_SIZE + 1];
@@ -114,7 +113,7 @@ public class HuffProcessor {
 		    // create new HuffNode t with weight from
 		    // left.weight+right.weight and left, right subtrees
 		    
-		    HuffNode t = new HuffNode(left.myWeight, right.myWeight, left, right);
+		    HuffNode t = new HuffNode(0-1,left.myWeight + right.myWeight, left, right);
 		    pq.add(t);
 		}
 		HuffNode root = pq.remove();
@@ -125,15 +124,31 @@ public class HuffProcessor {
 
 	
 	
-	private Object CodingsFromTree(HuffNode root) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	private Object CodingsFromTree(HuffNode root) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 
 	private void writeHeader(HuffNode root, BitOutputStream out) {
-		// TODO Auto-generated method stub
+		if(root.myLeft != null && root.myRight != null) {
 
+			writeHeader(root.myLeft, out);
+
+			writeHeader(root.myRight, out);
+
+			out.writeBits(1, 0);			
+		}
+
+		else {
+
+			out.writeBits(1, 1);
+
+			out.writeBits(BITS_PER_WORD + 1, root.myValue);
+
+		}
 	}
+
+	
 
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		// TODO Auto-generated method stub
