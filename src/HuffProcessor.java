@@ -72,8 +72,9 @@ public class HuffProcessor {
 		int freq[] = new int[ALPH_SIZE+1];
 		while (true ) {
 		int val = in.readBits(BITS_PER_WORD);
-		freq[val] = freq[val] +1;
 		if (val == -1) break;
+		freq[val] = freq[val] +1;
+		
 		}
 		return freq;
 	}
