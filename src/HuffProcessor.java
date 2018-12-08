@@ -41,17 +41,61 @@ public class HuffProcessor {
 	 * @param out
 	 *            Buffered bit stream writing to the output file.
 	 */
-	public void compress(BitInputStream in, BitOutputStream out){
-
-		while (true){
-			int val = in.readBits(BITS_PER_WORD);
-			if (val == -1) break;
-			out.writeBits(BITS_PER_WORD, val);
-		}
+	public void compress(BitInputStream in, BitOutputStream out){  
+		
+		int[] counts = readForCounts(in);
+		HuffNode root = makeTreeFromCounts(counts);
+		String[] codings = makeCodingsFromTree(root);
+		
+		out.writeBits(BITS_PER_INT, HUFF_TREE);
+		writeHeader(root, out);
+		
+		in.reset();
+		writeCompressedBits(codings, in, out);
 		out.close();
+//		
+//		while (true){
+//		int val = in.readBits(BITS_PER_WORD);
+//		if (val == -1) break;
+//		out.writeBits(BITS_PER_WORD, val);
+//	}
+//	out.close();
+
+
+		}
+
+	
+	
+	private String[] makeCodingsFromTree(HuffNode root) {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	
-	
+
+	private int[] readForCounts(BitInputStream in) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private HuffNode makeTreeFromCounts(int[] counts) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private Object CodingsFromTree(HuffNode root) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private void writeHeader(HuffNode root, BitOutputStream out) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	/**
 	 * Decompresses a file. Output file must be identical bit-by-bit to the
 	 * original.
@@ -76,6 +120,26 @@ public class HuffProcessor {
 
 	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
 		// TODO Auto-generated method stub
+		HuffNode current = root;
+		while(true) {
+			int bits = in.readBits(1);
+			if(bits == -1) {
+				throw new HuffException("bad input, no PSEUDO_EOF");
+					
+			}
+			else {
+				if(bits == 0) current = current.myLeft;
+				else current = current.myRight;
+				
+				
+			}
+			if (current.myLeft == null && current.myRight == null) {
+				if(current.myValue == PSEUDO_EOF) break;
+				else {
+					out.writeBits(BITS_PER_WORD, current.myValue);
+					current = root;
+				}
+			}}
 		
 		
 		
@@ -100,3 +164,4 @@ public class HuffProcessor {
 	}
 
 	}
+
