@@ -70,6 +70,7 @@ public class HuffProcessor {
 
 	private int[] readForCounts(BitInputStream in) {
 		int freq[] = new int[ALPH_SIZE+1];
+		freq[PSEUDO_EOF] = 1;
 		while (true ) {
 		int val = in.readBits(BITS_PER_WORD);
 		if (val == -1) break;
@@ -97,7 +98,7 @@ public class HuffProcessor {
 		    // create new HuffNode t with weight from
 		    // left.weight+right.weight and left, right subtrees
 		    
-		    HuffNode t = new HuffNode(left.myWeight, right.myWeight, left, right);
+		    HuffNode t = new HuffNode(-1, left.myWeight + right.myWeight, left, right);
 		    pq.add(t);
 		}
 		HuffNode root = pq.remove();
@@ -113,13 +114,27 @@ public class HuffProcessor {
 		return null;
 	}
 
+	
 	private void writeHeader(HuffNode root, BitOutputStream out) {
 		// TODO Auto-generated method stub
+		if(root.myLeft != null && root.myRight != null) {
+			writeHeader(root.myLeft, out);
+			writeHeader(root.myRight, out);
+			out.writeBits(1, 0);
+			
+							
+		}
+		else {
+			out.writeBits(1, 1);
+			out.writeBits(BITS_PER_WORD + 1, root.myValue);
+		}
 
 	}
 
+	
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		// TODO Auto-generated method stub
+		int val = in.readBits();
 
 	}
 
