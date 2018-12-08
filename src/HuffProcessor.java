@@ -120,7 +120,7 @@ public class HuffProcessor {
 		    // create new HuffNode t with weight from
 		    // left.weight+right.weight and left, right subtrees
 		    
-		    HuffNode t = new HuffNode(0-1,left.myWeight + right.myWeight, left, right);
+		    HuffNode t = new HuffNode(-1,left.myWeight + right.myWeight, left, right);
 		    pq.add(t);
 		}
 		
@@ -167,7 +167,7 @@ public class HuffProcessor {
 			    out.writeBits(code.length(), Integer.parseInt(code,2));
 		while (true) {
 		int val = in.readBits(BITS_PER_WORD);
-		if (val == -1) break;
+		if (val == -1) { break;}
 		code = codings[val];
 		
 		
