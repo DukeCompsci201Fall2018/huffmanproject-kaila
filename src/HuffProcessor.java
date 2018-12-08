@@ -1,5 +1,6 @@
 
 /**
+ * Collins Abanda
  * Although this class has a history of several years,
  * it is starting from a blank-slate, new and clean implementation
  * as of Fall 2018.
@@ -59,8 +60,10 @@ public class HuffProcessor {
 	 *            Buffered bit stream writing to the output file.
 	 */
 	public void decompress(BitInputStream in, BitOutputStream out){
-
-		while (true){
+		
+		int bits = in.readBits(BITS_PER_INT);
+		if (bits != HUFF_TREE)
+		
 			int val = in.readBits(BITS_PER_WORD);
 			if (val == -1) break;
 			out.writeBits(BITS_PER_WORD, val);
