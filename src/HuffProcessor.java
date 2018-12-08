@@ -91,11 +91,7 @@ public class HuffProcessor {
 
 	private int[] readForCounts(BitInputStream in) {
 		int freq[] = new int[ALPH_SIZE+1];
-<<<<<<< HEAD
-		freq[PSEUDO_EOF] = 1;
-=======
 		freq[PSEUDO_EOF] =1;
->>>>>>> eea485d7226465900cfce8850447f1f5dca192ca
 		while (true ) {
 		int val = in.readBits(BITS_PER_WORD);
 		if (val == -1) break;
@@ -124,15 +120,7 @@ public class HuffProcessor {
 		    // create new HuffNode t with weight from
 		    // left.weight+right.weight and left, right subtrees
 		    
-<<<<<<< HEAD
 		    HuffNode t = new HuffNode(-1,left.myWeight + right.myWeight, left, right);
-=======
-<<<<<<< HEAD
-		    HuffNode t = new HuffNode(-1, left.myWeight + right.myWeight, left, right);
-=======
-		    HuffNode t = new HuffNode(0-1,left.myWeight + right.myWeight, left, right);
->>>>>>> eea485d7226465900cfce8850447f1f5dca192ca
->>>>>>> 7504b5b5112258977345e237d47ca24d8c50faf6
 		    pq.add(t);
 		}
 		
@@ -152,21 +140,7 @@ public class HuffProcessor {
 //		return null;
 //	}
 
-	
 	private void writeHeader(HuffNode root, BitOutputStream out) {
-<<<<<<< HEAD
-		// TODO Auto-generated method stub
-		if(root.myLeft != null && root.myRight != null) {
-			writeHeader(root.myLeft, out);
-			writeHeader(root.myRight, out);
-			out.writeBits(1, 0);
-			
-							
-		}
-		else {
-			out.writeBits(1, 1);
-			out.writeBits(BITS_PER_WORD + 1, root.myValue);
-=======
 		if(root.myLeft != null && root.myRight != null) {
 
 			writeHeader(root.myLeft, out);
@@ -174,7 +148,6 @@ public class HuffProcessor {
 			writeHeader(root.myRight, out);
 
 			out.writeBits(1, 0);			
->>>>>>> eea485d7226465900cfce8850447f1f5dca192ca
 		}
 
 		else {
@@ -187,11 +160,6 @@ public class HuffProcessor {
 	}
 
 	
-<<<<<<< HEAD
-	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
-		// TODO Auto-generated method stub
-		int val = in.readBits();
-=======
 
 	private void writeCompressedBits(String[] codings, BitInputStream in, BitOutputStream out) {
 		String code;
@@ -207,7 +175,6 @@ public class HuffProcessor {
 		out.writeBits(code.length(), Integer.parseInt(code,2));
 		}
 
->>>>>>> eea485d7226465900cfce8850447f1f5dca192ca
 
 	}
 
