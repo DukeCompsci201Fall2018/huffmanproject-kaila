@@ -1,4 +1,5 @@
 import java.util.PriorityQueue;
+import java.util.TreeMap;
 
 //Kaila Lattimore kml82
 //Collins Abanda caa52
@@ -62,11 +63,27 @@ public class HuffProcessor {
 //	out.close();
 
 	}
-
+	TreeMap<Integer,String> myMap = new TreeMap<>();
 	private String[] makeCodingsFromTree(HuffNode root) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		
+		String[] encodings = new String[ALPH_SIZE + 1];
+	    doWork(root,"",encodings);
+				
+				
+				return encodings;
+			}
+			
+			private void doWork(HuffNode root, String path, String[] encodings) {
+				if (root == null) return;
+				
+				if (root.myLeft == null && root.myRight == null) {
+					encodings[root.myValue] = path;
+			        return;
+				}
+				doWork(root.myLeft,path+"0", encodings);
+				doWork(root.myRight,path+"1", encodings);
+		
+			}
 
 	private int[] readForCounts(BitInputStream in) {
 		int freq[] = new int[ALPH_SIZE+1];
