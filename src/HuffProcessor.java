@@ -1,6 +1,7 @@
-
+//Kaila Lattimore kml82
+//Collins Abanda caa52
 /**
- * Collins Abanda
+ * 
  * Although this class has a history of several years,
  * it is starting from a blank-slate, new and clean implementation
  * as of Fall 2018.
@@ -119,6 +120,7 @@ public class HuffProcessor {
 		}
 
 	private void readCompressedBits(HuffNode root, BitInputStream in, BitOutputStream out) {
+<<<<<<< HEAD
 		// TODO Auto-generated method stub
 		HuffNode current = root;
 		while(true) {
@@ -140,6 +142,29 @@ public class HuffProcessor {
 					current = root;
 				}
 			}}
+=======
+		HuffNode current = root;
+		while (true) { 
+			int bits = in.readBits(1);
+			if(bits==-1) {
+				throw new HuffException("bad input, no PSEUDO_EOF");
+			}
+			else { 
+		           if (bits == 0) current = current.myLeft;
+		      else current = current.myRight;
+
+		           if (current.myLeft == null && current.myRight==null) {
+		               if (current.myValue == PSEUDO_EOF) 
+		                   break;   // out of loop
+		               else {
+		                   out.writeBits(8, current.myValue);
+		                   current = root; // start back after leaf
+		               }
+		           }
+			}
+		}
+
+>>>>>>> 8e927c0e8c196a898dda1c830cf2590ab6bf9667
 		
 		
 		
