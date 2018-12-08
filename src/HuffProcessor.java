@@ -30,9 +30,14 @@ public class HuffProcessor {
 	public HuffProcessor() {
 		this(0);
 	}
+	
 
 	public HuffProcessor(int debug) {
 		myDebugLevel = debug;
+		//HuffProcessor hp  = new HuffProcessor(4);
+		//HuffProcessor hp = new HuffProcessor(HuffProcessor.DEBUG_HIGH);
+
+
 	}
 
 	/**
@@ -99,6 +104,7 @@ public class HuffProcessor {
 
 	
 	private HuffNode makeTreeFromCounts(int[] counts) {
+		
 		// TODO Auto-generated method stub
 		PriorityQueue<HuffNode> pq = new PriorityQueue<>();
 
@@ -117,7 +123,11 @@ public class HuffProcessor {
 		    HuffNode t = new HuffNode(0-1,left.myWeight + right.myWeight, left, right);
 		    pq.add(t);
 		}
+		
 		HuffNode root = pq.remove();
+		if (myDebugLevel >= DEBUG_HIGH) {
+			System.out.printf("pq created with %d nodes\n", pq.size());
+		}
 		return root;
 		
 		
