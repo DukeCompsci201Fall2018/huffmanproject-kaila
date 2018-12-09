@@ -110,7 +110,13 @@ public class HuffProcessor {
 
 
 		for(int dex = 0; dex < counts.length; dex ++) {
-		    pq.add(new HuffNode(dex, counts[dex],null,null));
+			int newDex = counts[dex];
+			if(newDex != 0) {
+			    pq.add(new HuffNode(dex, newDex, null,null));
+				
+		
+			}
+
 		}
 
 		while (pq.size() > 1) {
@@ -120,7 +126,7 @@ public class HuffProcessor {
 		    // create new HuffNode t with weight from
 		    // left.weight+right.weight and left, right subtrees
 		    
-		    HuffNode t = new HuffNode(-1,left.myWeight + right.myWeight, left, right);
+		    HuffNode t = new HuffNode(0,left.myWeight + right.myWeight, left, right);
 		    pq.add(t);
 		}
 		
